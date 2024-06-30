@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .align__center {
+    @apply mx-auto max-w-[1140px] w-full px-[calc(1.5rem*.5)];
+  }
+}
