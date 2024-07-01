@@ -6,4 +6,8 @@
   .align__center {
     @apply mx-auto max-w-[1140px] w-full px-[calc(1.5rem*.5)];
   }
+
+  .white__logo {
+    filter: contrast(0) brightness(200);
+  }
 }

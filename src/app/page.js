@@ -6,19 +6,26 @@ export default function Home() {
   return (
     <div className="flex flex-col justify-center items-center">
       <header className="bg-inmetro flex flex-row items-center justify-center w-full shadow-[0px_4px_5px_0px_rgba(128,128,128,1)]">
-        <div className="max-h-[10vh] h-screen flex items-center justify-between align__center">
+        <div className="max-h-[7vh] h-screen flex items-center justify-between align__center">
           <section>
             <h1 className="font-bold text-3xl text-white">Beleza Única</h1>
           </section>
 
           <section className="block">
-            <Image
-              src="/inmetro-logo-horizontal.png"
-              width={155.55}
-              height={32}
-              alt="Isologo do Inmetro"
-              className="white__logo"
-            />
+            <Link
+              legacyBehavior
+              href="https://www.gov.br/inmetro/pt-br"
+            >
+              <a target="_blank">
+                <Image
+                  src="/inmetro-logo-horizontal.png"
+                  width={155.55}
+                  height={32}
+                  alt="Isologo do Inmetro"
+                  className="white__logo"
+                />
+              </a>
+            </Link>
           </section>
 
           <section className="flex flex-basis-auto items-center mt-[.7px] mb-[2.1px]">
@@ -29,7 +36,7 @@ export default function Home() {
                   href="/account/login"
                 >
                   <a
-                    className="block p-2 bg-none border-none rounded-md text-center text-secondary-light no-underline transition duration-300 hover:text-white"
+                    className="block py-2 px-5 bg-none border-none rounded-md text-center text-secondary-light no-underline transition duration-300 hover:text-white"
                     target="_blank"
                   >
                     Entrar
@@ -55,7 +62,7 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="min-h-[75vh] align__center"></main>
+      <main className="min-h-[80vh] align__center"></main>
 
       <Footer />
     </div>

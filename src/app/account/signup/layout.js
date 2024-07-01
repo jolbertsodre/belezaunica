@@ -9,7 +9,7 @@ const figtree = Figtree({
 export const metadata = {
   title: "Beleza Única",
   description:
-    "Website única com o teor informativo sobre a pressão estética nas redes sociais e na sociedade",
+    "Website Beleza Única com o foco informativo sobre a pressão estética nas redes sociais e na sociedade.",
 };
 
 export default function RootLayout({ children }) {
