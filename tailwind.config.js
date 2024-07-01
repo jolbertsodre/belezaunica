@@ -6,7 +6,21 @@ module.exports = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        inmetro: {
+          DEFAULT: "#002E5F",
+        },
+        secondary: {
+          light: "#87A2B5",
+          DEFAULT: "#56B3FA",
+          dark: "#0C2858",
+        },
+        divider: {
+          DEFAULT: "#808080",
+        },
+      },
+    },
   },
   plugins: [],
 };

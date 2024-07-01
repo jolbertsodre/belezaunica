@@ -5,10 +5,10 @@ import Footer from "@/components/ui/Footer";
 export default function Home() {
   return (
     <div className="flex flex-col justify-center items-center">
-      <header className="bg-inmetro flex flex-row items-center justify-center w-full shadow-[0px_4px_5px_0px_rgba(128,128,128,1)]">
+      <header className="bg-[#EEE] flex flex-row items-center justify-center w-full">
         <div className="max-h-[10vh] h-screen flex items-center justify-between align__center">
           <section>
-            <h1 className="font-bold text-3xl text-white">Beleza Única</h1>
+            <h1 className="font-bold text-3xl">Beleza Única</h1>
           </section>
 
           <section className="block">
@@ -17,7 +17,6 @@ export default function Home() {
               width={155.55}
               height={32}
               alt="Isologo do Inmetro"
-              className="white__logo"
             />
           </section>
 
@@ -29,7 +28,7 @@ export default function Home() {
                   href="/account/login"
                 >
                   <a
-                    className="block p-2 bg-none border-none rounded-md text-center text-secondary-light no-underline transition duration-300 hover:text-white"
+                    className="block p-2 bg-none border-none rounded-md text-center text-[#0007] no-underline transition duration-300 hover:text-[#000]"
                     target="_blank"
                   >
                     Entrar
@@ -43,7 +42,7 @@ export default function Home() {
                   href="/account/signup"
                 >
                   <a
-                    className="inline-block py-1.5 px-3 text-center text-inmetro bg-white border border-white rounded-md no-underline transition duration-500 hover:bg-secondary-dark hover:border-secondary-dark hover:text-white"
+                    className="inline-block py-1.5 px-3 text-center text-white bg-[#002E5F] border border-[#002E5F] rounded-md no-underline transition duration-300 hover:bg-[#104681]"
                     target="_blank"
                   >
                     Criar conta
