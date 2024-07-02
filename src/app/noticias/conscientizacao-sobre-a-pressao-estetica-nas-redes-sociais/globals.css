@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .align__center {
+    @apply mx-auto max-w-[1140px] w-full px-[calc(1.5rem*.5)];
+  }
+
+  .main__align {
+    @apply mx-auto max-w-[800px] w-full px-[calc(1.5rem*.5)] py-4;
+  }
+
+  .white__logo {
+    filter: contrast(0) brightness(200);
+  }
+
+  .p__tag {
+    @apply text-lg/8 !mb-10 text-justify
+  }
+}

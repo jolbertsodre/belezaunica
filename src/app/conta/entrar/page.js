@@ -108,7 +108,7 @@ export default function Home() {
               <li className="font-semibold">
                 <Link
                   legacyBehavior
-                  href="/account/signup"
+                  href="/conta/criar-conta"
                 >
                   <a
                     className="inline-block py-1.5 px-3 text-center text-inmetro bg-white border border-white rounded-md no-underline transition duration-500 hover:bg-secondary-dark hover:border-secondary-dark hover:text-white"
@@ -124,7 +124,7 @@ export default function Home() {
       </header>
 
       <main className="min-h-[85vh] align__center !py-6">
-        <h2 className="font-bold text-5xl/8 text-inmetro">Entrar</h2>
+        <h1 className="font-bold text-5xl/8 text-inmetro">Entrar</h1>
 
         <p className="!mt-5 !mb-3 font-medium text-lg text-secondary-light">
           Utilize seu email e senha para entrar!

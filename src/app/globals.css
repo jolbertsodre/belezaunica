@@ -4,10 +4,18 @@
 
 @layer components {
   .align__center {
-    @apply mx-auto max-w-[1140px] w-full px-[calc(1.5rem*.5)];
+      @apply mx-auto max-w-[1140px] w-full px-[calc(1.5rem*.5)];
+  }
+  
+  .main__align {
+      @apply mx-auto max-w-[800px] w-full px-[calc(1.5rem*.5)] py-4;
   }
 
   .white__logo {
     filter: contrast(0) brightness(200);
+  }
+
+  .anchor__style {
+    @apply flex flex-col items-center text-justify font-semibold text-xl/8 bg-[#f8f8f8] border-[#EEE] rounded-md px-5 py-3 max-h-60 h-screen;
   }
 }

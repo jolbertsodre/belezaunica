@@ -152,7 +152,7 @@ export default function Home() {
               <li className="font-semibold">
                 <Link
                   legacyBehavior
-                  href="/account/login"
+                  href="/conta/entrar"
                 >
                   <a
                     className="inline-block py-1.5 px-3 text-center text-inmetro bg-white border border-white rounded-md no-underline transition duration-500 hover:bg-secondary-dark hover:border-secondary-dark hover:text-white"
@@ -168,7 +168,7 @@ export default function Home() {
       </header>
 
       <main className="min-h-[85vh] align__center !py-6">
-        <h2 className="font-bold text-5xl/8 text-inmetro">Criar conta</h2>
+        <h1 className="font-bold text-5xl/8 text-inmetro">Criar conta</h1>
 
         <p className="!mt-5 font-medium text-lg text-secondary-light">
           Crie sua conta e nome de usuário com seu email e senha!
@@ -257,12 +257,12 @@ export default function Home() {
                 />
               </div>
             </button>
-
-            <p className="!mt-3 font-medium text-sm text-inmetro">
+            <span className="block !mt-3.5 font-medium text-[.75rem] text-inmetro">
               <strong>Observação:</strong> Ao criar a conta através do Google
-              seu nome de usuário será definido automaticamente baseado no seu
-              email do Google
-              <br />
+              seu nome de usuário será definido <strong>automaticamente</strong>{" "}
+              baseado no seu email do Google
+            </span>
+            <span className="block !mt-1 font-medium text-[.75rem] text-inmetro">
               <strong>Exemplo:</strong> Se seu email for{" "}
               <strong>
                 <em>exemplo.bom123@gmail.com</em>
@@ -271,7 +271,7 @@ export default function Home() {
               <strong>
                 <em>exemplo.bom123</em>
               </strong>
-            </p>
+            </span>
           </div>
         </form>
 
