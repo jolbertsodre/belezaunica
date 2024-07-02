@@ -35,22 +35,8 @@ export default function Home() {
             </Link>
           </section>
 
-          <section className="flex flex-basis-auto items-center mt-[.7px] mb-[2.1px]">
+          <section className="flex flex-basis-auto items-center mt-[.7px] mb-[2.1px] max-w-[192px] w-full">
             <ul className="flex flex-row pl-0 mb-0 ml-auto list-none">
-              <li className="font-semibold">
-                <Link
-                  legacyBehavior
-                  href="/account/login"
-                >
-                  <a
-                    className="block py-2 px-5 bg-none border-none rounded-md text-center text-secondary-light no-underline transition duration-300 hover:text-white"
-                    target="_blank"
-                  >
-                    Entrar
-                  </a>
-                </Link>
-              </li>
-
               <li className="font-semibold">
                 <Link
                   legacyBehavior
@@ -69,7 +55,7 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="min-h-[80vh] align__center !py-6">
+      <main className="min-h-[85vh] align__center !py-6">
         <h2 className="font-bold text-5xl/8 text-inmetro">Entrar</h2>
 
         <p className="!mt-5 !mb-3 font-medium text-lg text-secondary-light">
@@ -79,6 +65,7 @@ export default function Home() {
         <form>
           <div className="relative !mb-4">
             <input
+              autoFocus
               type="email"
               placeholder="exemplo@gmail.com"
               className="input__class block w-full bg-clip-padding text-inmetro font-normal text-base leading-tight min-h-[calc(3.5rem_+_2px)] h-[calc(3.5rem_+_2px)] border px-3 py-4 rounded-md border-solid transition[colors, shadow] duration-150 ease-in-out"
@@ -88,7 +75,7 @@ export default function Home() {
             </label>
           </div>
 
-          <div className="relative !mb-4l">
+          <div className="relative !mb-4">
             <input
               type="password"
               placeholder="********"
@@ -100,7 +87,9 @@ export default function Home() {
           </div>
 
           <div>
-            <button>Entrar</button>
+            <button className="flex flex-row flex-nowrap gap-1.5 items-center text-xl font-normal leading-normal text-center no-underline align-middle cursor-pointer select-none border bg-secondary text-white px-4 py-2 rounded-lg border-solid border-secondary hover:border-inmetro hover:bg-inmetro disabled:cursor-none disabled:pointer-events-none disabled:text-white disabled:bg-secondary-light disabled:opacity-[0.65] disabled:border-secondary-light transition-[colors, shadow] duration-[400ms] ease-in-out">
+              Entrar
+            </button>
           </div>
 
           <div className="flex flex-row gap-1.5 items-center max-w-[100px] w-full my-3">
@@ -110,10 +99,7 @@ export default function Home() {
           </div>
 
           <div className="block items-center !mb-4">
-            <button
-              // onClick={onSubmitGoogle}
-              className="flex flex-row flex-nowrap gap-1.5 items-center text-xl font-normal leading-normal text-center no-underline align-middle cursor-pointer select-none border bg-transparent text-secondary-light px-4 py-2 rounded-lg border-solid border-secondary-light hover:border-inmetro hover:text-inmetro transition[colors, shadow] duration-[350ms] ease-in-out"
-            >
+            <button className="flex flex-row flex-nowrap gap-1.5 items-center text-xl font-normal leading-normal text-center no-underline align-middle cursor-pointer select-none border bg-transparent text-secondary-light px-4 py-2 rounded-lg border-solid border-secondary-light hover:border-inmetro hover:text-inmetro transition[colors, shadow] duration-[350ms] ease-in-out">
               Entrar com Google
               <div className="flex items-center">
                 <Image

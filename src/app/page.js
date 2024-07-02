@@ -28,7 +28,7 @@ export default function Home() {
             </Link>
           </section>
 
-          <section className="flex flex-basis-auto items-center mt-[.7px] mb-[2.1px]">
+          <section className="flex flex-basis-auto items-center mt-[.7px] mb-[2.1px] max-w-[192px] w-full">
             <ul className="flex flex-row pl-0 mb-0 ml-auto list-none">
               <li className="font-semibold">
                 <Link
@@ -62,7 +62,7 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="min-h-[80vh] align__center"></main>
+      <main className="min-h-[85vh] align__center"></main>
 
       <Footer />
     </div>

@@ -13,7 +13,8 @@ module.exports = {
         },
         secondary: {
           light: "#87A2B5",
-          DEFAULT: "#56B3FA",
+          footer: "#56B3FA",
+          DEFAULT: "#2255AC",
           dark: "#0C2858",
         },
         divider: {
