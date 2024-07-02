@@ -1,8 +1,76 @@
+"use client";
+
+import Footer from "@/components/ui/Footer";
 import Image from "next/image";
 import Link from "next/link";
-import Footer from "@/components/ui/Footer";
+import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { googleSignUp, logIn } from "@/lib/firebase/firebase_interface";
+import { ToastContainer } from "react-toastify";
+import Notify from "@/components/ui/toast";
 
 export default function Home() {
+  const router = useRouter();
+
+  const EMAIL_REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+  const PASSWORD_REGEX =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [formValid, setFormValid] = useState(false);
+
+  useEffect(() => {
+    const isValid = EMAIL_REGEX.test(email) && PASSWORD_REGEX.test(password);
+    setFormValid(isValid);
+  }, [email, password]);
+
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      await logIn(email, password).then((user) => {
+        Notify(
+          "success",
+          5500,
+          `Você entrou com sucesso foi na conta com email o ${user.email}!`
+        );
+        setTimeout(() => {
+          router.push("/");
+        }, 6000);
+      });
+    } catch (e) {
+      Notify("error", e.message);
+    }
+  };
+
+  const onSubmitGoogle = async (event) => {
+    event.preventDefault();
+
+    try {
+      await googleSignUp().then((user) => {
+        Notify(
+          "success",
+          5500,
+          `Você entrou com sucesso através do Google com o email o ${user.email}!`
+        );
+        setTimeout(() => {
+          router.push("/");
+        }, 6000);
+      });
+    } catch (e) {
+      Notify("error", e.message);
+    }
+  };
+
   return (
     <div className="flex flex-col justify-center items-center">
       <header className="bg-inmetro flex flex-row items-center justify-center w-full shadow-[0px_4px_5px_0px_rgba(128,128,128,1)]">
@@ -65,7 +133,9 @@ export default function Home() {
         <form>
           <div className="relative !mb-4">
             <input
-              autoFocus
+              onChange={handleEmailChange}
+              value={email}
+              autoComplete="email"
               type="email"
               placeholder="exemplo@gmail.com"
               className="input__class block w-full bg-clip-padding text-inmetro font-normal text-base leading-tight min-h-[calc(3.5rem_+_2px)] h-[calc(3.5rem_+_2px)] border px-3 py-4 rounded-md border-solid transition[colors, shadow] duration-150 ease-in-out"
@@ -77,8 +147,12 @@ export default function Home() {
 
           <div className="relative !mb-4">
             <input
+              onChange={handlePasswordChange}
+              value={password}
               type="password"
               placeholder="********"
+              maxLength={32}
+              autoComplete="password"
               className="input__class block w-full bg-clip-padding text-inmetro font-normal text-base leading-tight min-h-[calc(3.5rem_+_2px)] h-[calc(3.5rem_+_2px)] border px-3 py-4 rounded-md border-solid transition[colors, shadow] duration-150 ease-in-out"
             />
             <label className="label__input label__class transition[opacity, transform] duration-300 ease-in-out">
@@ -87,7 +161,11 @@ export default function Home() {
           </div>
 
           <div>
-            <button className="flex flex-row flex-nowrap gap-1.5 items-center text-xl font-normal leading-normal text-center no-underline align-middle cursor-pointer select-none border bg-secondary text-white px-4 py-2 rounded-lg border-solid border-secondary hover:border-inmetro hover:bg-inmetro disabled:cursor-none disabled:pointer-events-none disabled:text-white disabled:bg-secondary-light disabled:opacity-[0.65] disabled:border-secondary-light transition-[colors, shadow] duration-[400ms] ease-in-out">
+            <button
+              disabled={!formValid}
+              onClick={onSubmit}
+              className="flex flex-row flex-nowrap gap-1.5 items-center text-xl font-normal leading-normal text-center no-underline align-middle cursor-pointer select-none border bg-secondary text-white px-4 py-2 rounded-lg border-solid border-secondary hover:border-inmetro hover:bg-inmetro disabled:cursor-none disabled:pointer-events-none disabled:text-white disabled:bg-secondary-light disabled:border-secondary-light transition-[colors, shadow] duration-[400ms] ease-in-out"
+            >
               Entrar
             </button>
           </div>
@@ -99,7 +177,10 @@ export default function Home() {
           </div>
 
           <div className="block items-center !mb-4">
-            <button className="flex flex-row flex-nowrap gap-1.5 items-center text-xl font-normal leading-normal text-center no-underline align-middle cursor-pointer select-none border bg-transparent text-secondary-light px-4 py-2 rounded-lg border-solid border-secondary-light hover:border-inmetro hover:text-inmetro transition[colors, shadow] duration-[350ms] ease-in-out">
+            <button
+              onClick={onSubmitGoogle}
+              className="flex flex-row flex-nowrap gap-1.5 items-center text-xl font-normal leading-normal text-center no-underline align-middle cursor-pointer select-none border bg-transparent text-secondary-light px-4 py-2 rounded-lg border-solid border-secondary-light hover:border-inmetro hover:text-inmetro transition[colors, shadow] duration-[350ms] ease-in-out"
+            >
               Entrar com Google
               <div className="flex items-center">
                 <Image
@@ -112,6 +193,8 @@ export default function Home() {
             </button>
           </div>
         </form>
+
+        {<ToastContainer containerId={"standard"} />}
       </main>
 
       <Footer />
