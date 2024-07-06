@@ -22,7 +22,7 @@ export default function Home() {
   const handleLogout = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4144/api/jwt-token/revoke",
+        "https://belezaunica.vercel.app/api/jwt-token/revoke",
         { headers: { Authorization: `Bearer ${token}` } }
       );
 

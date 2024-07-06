@@ -48,14 +48,14 @@ export default function Home() {
 
     try {
       await axios.post(
-        "http://localhost:4144/api/user/verify",
+        "https://belezaunica.vercel.app/api/user/verify",
         { email, password },
         { headers: { "Content-Type": "application/json" } }
       );
 
       try {
         const response = await axios.post(
-          "http://localhost:4144/api/jwt-token/create",
+          "https://belezaunica.vercel.app/api/jwt-token/create",
           { email, password },
           { headers: { "Content-Type": "application/json" } }
         );
@@ -80,7 +80,7 @@ export default function Home() {
   const handleLogout = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4144/api/jwt-token/revoke",
+        "https://belezaunica.vercel.app/api/jwt-token/revoke",
         { headers: { Authorization: `Bearer ${token}` } }
       );
 

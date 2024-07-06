@@ -16,7 +16,7 @@ const Comments = ({ token, pathname }) => {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await axios.post("http://localhost:4144/api/comments/get", { pathname }, { headers: { "Content-Type": "application/json" } });
+        const response = await axios.post("https://belezaunica.vercel.app/api/comments/get", { pathname }, { headers: { "Content-Type": "application/json" } });
         setComments(response.data.rows);
       } catch (err) {
         throw new Error(`Não foi possível recuperar os comentários: ${err}`);
@@ -35,7 +35,7 @@ const Comments = ({ token, pathname }) => {
     }
 
     try {
-      const response = await axios.post("http://localhost:4144/api/comments/create", { comment: newComment, pathname }, { headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` } });
+      const response = await axios.post("https://belezaunica.vercel.app/api/comments/create", { comment: newComment, pathname }, { headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` } });
       setComments([response.data.result, ...comments]);
       setNewComment('');
     } catch (err) {
