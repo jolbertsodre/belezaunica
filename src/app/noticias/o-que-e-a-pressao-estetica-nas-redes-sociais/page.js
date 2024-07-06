@@ -1,8 +1,43 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import Footer from "@/components/ui/Footer";
+import Comments from "@/components/ui/Comments";
+import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { ToastContainer } from "react-toastify";
+import Notify from "@/components/ui/toast";
+import { usePathname } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    const tkn = window.localStorage.getItem("token");
+    if (tkn) setToken(tkn);
+  });
+
+  const handleLogout = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:4144/api/jwt-token/revoke",
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      window.localStorage.removeItem("token");
+
+      Notify("success", 4000, "standard", response.data.success);
+
+      setTimeout(router.push("/conta/entrar"), 6000);
+    } catch (err) {
+      Notify("error", 6000, "standard", err);
+    }
+  };
+
   return (
     <div className="flex flex-col justify-center items-center">
       <header className="bg-inmetro flex flex-row items-center justify-center w-full shadow-[0px_4px_5px_0px_rgba(128,128,128,1)]">
@@ -35,36 +70,64 @@ export default function Home() {
             </Link>
           </section>
 
-          <section className="flex flex-basis-auto items-center mt-[.7px] mb-[2.1px] max-w-[192px] w-full">
-            <ul className="flex flex-row pl-0 mb-0 ml-auto list-none">
-              <li className="font-semibold">
-                <Link
-                  legacyBehavior
-                  href="/conta/entrar"
-                >
-                  <a
-                    className="block py-2 px-5 bg-none border-none rounded-md text-center text-secondary-light no-underline transition duration-300 hover:text-white"
-                    target="_blank"
+          <section className="flex flex-basis-auto items-center mt-[.7px] mb-[2.1px] max-w-[321px] w-full">
+            {token ? (
+              <ul className="flex flex-row pl-0 mb-0 ml-auto list-none">
+                <li className="font-semibold">
+                  <Link
+                    legacyBehavior
+                    href="/noticias"
                   >
-                    Entrar
-                  </a>
-                </Link>
-              </li>
+                    <a
+                      className="block py-2 px-5 bg-none border-none rounded-md text-center text-secondary-light no-underline transition duration-300 hover:text-white"
+                      target="_blank"
+                    >
+                      Notícias
+                    </a>
+                  </Link>
+                </li>
 
-              <li className="font-semibold">
-                <Link
-                  legacyBehavior
-                  href="/conta/criar-conta"
-                >
-                  <a
+                <li className="font-semibold">
+                  <button
+                    onClick={handleLogout}
                     className="inline-block py-1.5 px-3 text-center text-inmetro bg-white border border-white rounded-md no-underline transition duration-500 hover:bg-secondary-dark hover:border-secondary-dark hover:text-white"
                     target="_blank"
                   >
-                    Criar conta
-                  </a>
-                </Link>
-              </li>
-            </ul>
+                    Sair
+                  </button>
+                </li>
+              </ul>
+            ) : (
+              <ul className="flex flex-row pl-0 mb-0 ml-auto list-none">
+                <li className="font-semibold">
+                  <Link
+                    legacyBehavior
+                    href="/conta/entrar"
+                  >
+                    <a
+                      className="block py-2 px-5 bg-none border-none rounded-md text-center text-secondary-light no-underline transition duration-300 hover:text-white"
+                      target="_blank"
+                    >
+                      Entrar
+                    </a>
+                  </Link>
+                </li>
+
+                <li className="font-semibold">
+                  <Link
+                    legacyBehavior
+                    href="/conta/criar-conta"
+                  >
+                    <a
+                      className="inline-block py-1.5 px-3 text-center text-inmetro bg-white border border-white rounded-md no-underline transition duration-500 hover:bg-secondary-dark hover:border-secondary-dark hover:text-white"
+                      target="_blank"
+                    >
+                      Criar conta
+                    </a>
+                  </Link>
+                </li>
+              </ul>
+            )}
           </section>
         </div>
       </header>
@@ -129,6 +192,13 @@ export default function Home() {
             afetando negativamente a autoimagem e a saúde mental.
           </p>
         </section>
+
+        <Comments
+          token={token}
+          pathname={pathname.substring(pathname.lastIndexOf("/") + 1)}
+        />
+
+        <ToastContainer containerId={"standard"} />
       </main>
 
       <Footer />

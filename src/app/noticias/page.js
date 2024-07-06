@@ -74,13 +74,13 @@ export default function Home() {
                 <li className="font-semibold">
                   <Link
                     legacyBehavior
-                    href="/noticias"
+                    href="/"
                   >
                     <a
                       className="block py-2 px-5 bg-none border-none rounded-md text-center text-secondary-light no-underline transition duration-300 hover:text-white"
                       target="_blank"
                     >
-                      Notícias
+                      Home
                     </a>
                   </Link>
                 </li>
@@ -145,83 +145,23 @@ export default function Home() {
       </header>
 
       <main className="min-h-[85vh] main__align">
-        <section className="!mt-4">
-          <h1 className="text-[2.5rem]/8 font-bold !mb-6">
-            Bem-vindo ao ao Beleza Única!
-          </h1>
-        </section>
-
-        <section className="!mt-10">
-          <p className="p__tag">
-            As redes sociais se tornaram uma parte integral das nossas vidas,
-            oferecendo uma maneira fácil de se conectar com amigos, familiares e
-            o mundo ao nosso redor. No entanto, essas plataformas também têm um
-            lado sombrio: a pressão estética.
-          </p>
-
-          <p className="p__tag">
-            A pressão estética nas redes sociais refere-se às expectativas e
-            imposições de padrões de beleza irreais que podem impactar
-            profundamente nossa autoimagem e saúde mental. Nas redes sociais,
-            somos constantemente bombardeados com imagens de corpos perfeitos e
-            vidas aparentemente ideais, o que pode criar uma sensação de
-            inadequação e insatisfação com nossa própria aparência.
-          </p>
-
-          <p className="p__tag">
-            Estudos mostram que a exposição contínua a essas imagens pode levar
-            a problemas de saúde mental, como ansiedade, depressão e distúrbios
-            alimentares. As redes sociais, como Instagram, Facebook e TikTok,
-            são ambientes onde a comparação constante é incentivada, e os
-            algoritmos dessas plataformas frequentemente promovem conteúdos que
-            reforçam padrões de beleza inatingíveis.
-          </p>
-
-          <p className="p__tag">
-            Nosso site foi criado com o objetivo de informar, conscientizar e
-            ajudar você a entender e enfrentar a pressão estética nas redes
-            sociais. Aqui, você encontrará artigos abrangentes que exploram
-            diferentes aspectos desse fenômeno, desde uma introdução ao tema até
-            estratégias para lidar com a pressão e manter uma mentalidade
-            saudável.
-          </p>
-
-          <p className="p__tag">
-            Esperamos que, ao ler nossos artigos, você possa desenvolver uma
-            visão mais crítica sobre o conteúdo consumido nas redes sociais e
-            encontrar maneiras de proteger sua saúde mental e bem-estar.
-            Junte-se a nós nesta jornada de conscientização e empoderamento.
-          </p>
-
-          <p className="p__tag">
-            Explorar esses temas é essencial para reconhecer os sinais de que a
-            pressão estética pode estar afetando sua vida e descobrir como lidar
-            com ela de maneira eficaz. Nossa missão é proporcionar um espaço
-            seguro e informativo para que todos possam aprender e crescer
-            juntos.
-          </p>
-        </section>
-
-        <section className="!my-5">
-          <h1 className="text-2xl/8 font-semibold">
-            Alguns artigos interessantes:
-          </h1>
+        <section className="!mb-5 !mt-4">
+          <h1 className="text-2xl/8 font-semibold">Artigos mais recentes:</h1>
         </section>
 
         <section className="!mb-4">
-          <ul className="grid grid-cols-2 gap-4">
+          <ul className="w-full flex flex-col h-max-[2rem] h-screen">
             <li>
               <a
                 href="/noticias/o-que-e-a-pressao-estetica-nas-redes-sociais"
-                className="anchor__style"
+                className="anchor__news__style"
                 target="_blank"
               >
-                <div className="!mb-3">
+                <div className="!mr-4 max-w-[71.68px] w-full max-h-[64px] h-screen">
                   <Image
-                    className="white__logo"
-                    src="/inmetro-logo-horizontal.png"
-                    width={97.22}
-                    height={20}
+                    src="/inmetro-logo-vertical.png"
+                    width={71.68}
+                    height={64}
                     alt="Isologo do Inmetro"
                   />
                 </div>
@@ -232,14 +172,13 @@ export default function Home() {
             <li>
               <a
                 href="/noticias/conscientizacao-sobre-a-pressao-estetica-nas-redes-sociais"
-                className="anchor__style"
+                className="anchor__news__style"
               >
-                <div className="!mb-3">
+                <div className="!mr-4 max-w-[71.68px] w-full max-h-[64px] h-screen">
                   <Image
-                    className="white__logo"
-                    src="/inmetro-logo-horizontal.png"
-                    width={97.22}
-                    height={20}
+                    src="/inmetro-logo-vertical.png"
+                    width={71.68}
+                    height={64}
                     alt="Isologo do Inmetro"
                   />
                 </div>
@@ -250,15 +189,14 @@ export default function Home() {
             <li>
               <a
                 href="/noticias/como-lidar-com-a-pressao-estetica-nas-redes-sociais"
-                className="anchor__style"
+                className="anchor__news__style"
                 target="_blank"
               >
-                <div className="!mb-3">
+                <div className="!mr-4 max-w-[71.68px] w-full max-h-[64px] h-screen">
                   <Image
-                    className="white__logo"
-                    src="/inmetro-logo-horizontal.png"
-                    width={97.22}
-                    height={20}
+                    src="/inmetro-logo-vertical.png"
+                    width={71.68}
+                    height={64}
                     alt="Isologo do Inmetro"
                   />
                 </div>
@@ -269,15 +207,14 @@ export default function Home() {
             <li>
               <a
                 href="/noticias/superando-a-pressao-estetica-nas-redes-sociais"
-                className="anchor__style"
+                className="anchor__news__style border-b-2"
                 target="_blank"
               >
-                <div className="!mb-3">
+                <div className="!mr-4 max-w-[71.68px] w-full max-h-[64px] h-screen">
                   <Image
-                    className="white__logo"
-                    src="/inmetro-logo-horizontal.png"
-                    width={97.22}
-                    height={20}
+                    src="/inmetro-logo-vertical.png"
+                    width={71.68}
+                    height={64}
                     alt="Isologo do Inmetro"
                   />
                 </div>
@@ -286,22 +223,6 @@ export default function Home() {
               </a>
             </li>
           </ul>
-        </section>
-
-        <section className="!mt-7 !mb-3 flex justify-center">
-          <button>
-            <Link
-              legacyBehavior
-              href="/noticias"
-            >
-              <a
-                className="inline-block py-2 px-5 text-lg font-semibold text-center text-white bg-secondary border border-secondary rounded-md no-underline transition duration-500 hover:bg-secondary-dark hover:border-secondary-dark hover:text-white"
-                target="_blank"
-              >
-                Ver mais artigos...
-              </a>
-            </Link>
-          </button>
         </section>
 
         {<ToastContainer containerId={"standard"} />}

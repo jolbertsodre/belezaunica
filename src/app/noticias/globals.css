@@ -15,8 +15,8 @@
     filter: contrast(0) brightness(200);
   }
 
-  .anchor__style {
-    @apply flex flex-col items-center text-justify font-semibold text-xl/8 bg-inmetro border-2 border-secondary-dark text-white rounded-md px-5 py-3 max-h-60 h-screen;
+  .anchor__news__style {
+    @apply flex flex-row items-center text-justify font-semibold text-xl/8 bg-transparent border-t-2 border-inmetro text-inmetro px-5 py-3 max-h-40 h-screen;
   }
 
   .p__tag {

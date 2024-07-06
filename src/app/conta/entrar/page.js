@@ -5,12 +5,22 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import { googleSignUp, logIn } from "@/lib/firebase/firebase_interface";
 import { ToastContainer } from "react-toastify";
 import Notify from "@/components/ui/toast";
+import axios from "axios";
 
 export default function Home() {
   const router = useRouter();
+
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    const tkn = window.localStorage.getItem("token");
+    if (tkn) {
+      setToken(tkn);
+      setTimeout(() => router.push("/"), 7500);
+    }
+  });
 
   const EMAIL_REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
   const PASSWORD_REGEX =
@@ -37,37 +47,50 @@ export default function Home() {
     event.preventDefault();
 
     try {
-      await logIn(email, password).then((user) => {
-        Notify(
-          "success",
-          5500,
-          `Você entrou com sucesso foi na conta com email o ${user.email}!`
+      await axios.post(
+        "http://localhost:4144/api/user/verify",
+        { email, password },
+        { headers: { "Content-Type": "application/json" } }
+      );
+
+      try {
+        const response = await axios.post(
+          "http://localhost:4144/api/jwt-token/create",
+          { email, password },
+          { headers: { "Content-Type": "application/json" } }
         );
+
+        const { token } = response.data;
+
+        window.localStorage.setItem("token", token);
+
+        Notify("success", 5500, "standard", response.data.success);
+
         setTimeout(() => {
           router.push("/");
         }, 6000);
-      });
-    } catch (e) {
-      Notify("error", e.message);
+      } catch (err) {
+        Notify("error", 6000, "standard", err.response.data.error);
+      }
+    } catch (err) {
+      Notify("error", 6000, "standard", err.response.data.error);
     }
   };
 
-  const onSubmitGoogle = async (event) => {
-    event.preventDefault();
-
+  const handleLogout = async () => {
     try {
-      await googleSignUp().then((user) => {
-        Notify(
-          "success",
-          5500,
-          `Você entrou com sucesso através do Google com o email o ${user.email}!`
-        );
-        setTimeout(() => {
-          router.push("/");
-        }, 6000);
-      });
-    } catch (e) {
-      Notify("error", e.message);
+      const response = await axios.get(
+        "http://localhost:4144/api/jwt-token/revoke",
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      window.localStorage.removeItem("token");
+
+      Notify("success", 4000, "standard", response.data.success);
+
+      setTimeout(router.push("/conta/entrar"), 6000);
+    } catch (err) {
+      Notify("error", 6000, "standard", err.response.data.error);
     }
   };
 
@@ -103,100 +126,126 @@ export default function Home() {
             </Link>
           </section>
 
-          <section className="flex flex-basis-auto items-center mt-[.7px] mb-[2.1px] max-w-[192px] w-full">
-            <ul className="flex flex-row pl-0 mb-0 ml-auto list-none">
-              <li className="font-semibold">
-                <Link
-                  legacyBehavior
-                  href="/conta/criar-conta"
-                >
-                  <a
+          <section className="flex flex-basis-auto items-center mt-[.7px] mb-[2.1px] max-w-[321px] w-full">
+            {token ? (
+              <ul className="flex flex-row pl-0 mb-0 ml-auto list-none">
+                <li className="font-semibold">
+                  <Link
+                    legacyBehavior
+                    href="/noticias"
+                  >
+                    <a
+                      className="block py-2 px-5 bg-none border-none rounded-md text-center text-secondary-light no-underline transition duration-300 hover:text-white"
+                      target="_blank"
+                    >
+                      Notícias
+                    </a>
+                  </Link>
+                </li>
+
+                <li className="font-semibold">
+                  <button
+                    onClick={handleLogout}
                     className="inline-block py-1.5 px-3 text-center text-inmetro bg-white border border-white rounded-md no-underline transition duration-500 hover:bg-secondary-dark hover:border-secondary-dark hover:text-white"
                     target="_blank"
                   >
-                    Criar conta
-                  </a>
-                </Link>
-              </li>
-            </ul>
+                    Sair
+                  </button>
+                </li>
+              </ul>
+            ) : (
+              <ul className="flex flex-row pl-0 mb-0 ml-auto list-none">
+                <li className="font-semibold">
+                  <Link
+                    legacyBehavior
+                    href="/noticias"
+                  >
+                    <a
+                      className="block py-2 px-5 bg-none border-none rounded-md text-center text-secondary-light no-underline transition duration-300 hover:text-white"
+                      target="_blank"
+                    >
+                      Notícias
+                    </a>
+                  </Link>
+                </li>
+
+                <li className="font-semibold !ml-2.5">
+                  <Link
+                    legacyBehavior
+                    href="/conta/criar-conta"
+                  >
+                    <a
+                      className="inline-block py-1.5 px-3 text-center text-inmetro bg-white border border-white rounded-md no-underline transition duration-500 hover:bg-secondary-dark hover:border-secondary-dark hover:text-white"
+                      target="_blank"
+                    >
+                      Criar conta
+                    </a>
+                  </Link>
+                </li>
+              </ul>
+            )}
           </section>
         </div>
       </header>
 
-      <main className="min-h-[85vh] align__center !py-6">
-        <h1 className="font-bold text-5xl/8 text-inmetro">Entrar</h1>
+      {token ? (
+        <main className="min-h-[85vh] align__center !py-6">
+          <h1 className="font-bold text-5xl/8 text-inmetro">
+            Usuário já logado!
+          </h1>
+        </main>
+      ) : (
+        <main className="min-h-[85vh] align__center !py-6">
+          <h1 className="font-bold text-5xl/8 text-inmetro">Entrar</h1>
 
-        <p className="!mt-5 !mb-3 font-medium text-lg text-secondary-light">
-          Utilize seu email e senha para entrar!
-        </p>
+          <p className="!mt-5 !mb-3 font-medium text-lg text-secondary-light">
+            Utilize seu email e senha para entrar!
+          </p>
 
-        <form>
-          <div className="relative !mb-4">
-            <input
-              onChange={handleEmailChange}
-              value={email}
-              autoComplete="email"
-              type="email"
-              placeholder="exemplo@gmail.com"
-              className="input__class block w-full bg-clip-padding text-inmetro font-normal text-base leading-tight min-h-[calc(3.5rem_+_2px)] h-[calc(3.5rem_+_2px)] border px-3 py-4 rounded-md border-solid transition[colors, shadow] duration-150 ease-in-out"
-            />
-            <label className="label__input label__class transition[opacity, transform] duration-300 ease-in-out">
-              Email
-            </label>
-          </div>
+          <form>
+            <div className="relative !mb-4">
+              <input
+                onChange={handleEmailChange}
+                value={email}
+                autoComplete="email"
+                type="email"
+                placeholder="exemplo@gmail.com"
+                className="input__class block w-full bg-clip-padding text-inmetro font-normal text-base leading-tight min-h-[calc(3.5rem_+_2px)] h-[calc(3.5rem_+_2px)] border px-3 py-4 rounded-md border-solid transition[colors, shadow] duration-150 ease-in-out"
+              />
+              <label className="label__input label__class transition[opacity, transform] duration-300 ease-in-out">
+                Email
+              </label>
+            </div>
 
-          <div className="relative !mb-4">
-            <input
-              onChange={handlePasswordChange}
-              value={password}
-              type="password"
-              placeholder="********"
-              maxLength={32}
-              autoComplete="password"
-              className="input__class block w-full bg-clip-padding text-inmetro font-normal text-base leading-tight min-h-[calc(3.5rem_+_2px)] h-[calc(3.5rem_+_2px)] border px-3 py-4 rounded-md border-solid transition[colors, shadow] duration-150 ease-in-out"
-            />
-            <label className="label__input label__class transition[opacity, transform] duration-300 ease-in-out">
-              Senha
-            </label>
-          </div>
+            <div className="relative !mb-4">
+              <input
+                onChange={handlePasswordChange}
+                value={password}
+                type="password"
+                placeholder="********"
+                maxLength={32}
+                autoComplete="password"
+                className="input__class block w-full bg-clip-padding text-inmetro font-normal text-base leading-tight min-h-[calc(3.5rem_+_2px)] h-[calc(3.5rem_+_2px)] border px-3 py-4 rounded-md border-solid transition[colors, shadow] duration-150 ease-in-out"
+              />
+              <label className="label__input label__class transition[opacity, transform] duration-300 ease-in-out">
+                Senha
+              </label>
+            </div>
 
-          <div>
-            <button
-              disabled={!formValid}
-              onClick={onSubmit}
-              className="flex flex-row flex-nowrap gap-1.5 items-center text-xl font-normal leading-normal text-center no-underline align-middle cursor-pointer select-none border bg-secondary text-white px-4 py-2 rounded-lg border-solid border-secondary hover:border-inmetro hover:bg-inmetro disabled:cursor-none disabled:pointer-events-none disabled:text-white disabled:bg-secondary-light disabled:border-secondary-light transition-[colors, shadow] duration-[400ms] ease-in-out"
-            >
-              Entrar
-            </button>
-          </div>
+            <div>
+              <button
+                disabled={!formValid}
+                onClick={onSubmit}
+                className="flex flex-row flex-nowrap gap-1.5 items-center text-xl font-normal leading-normal text-center no-underline align-middle cursor-pointer select-none border bg-secondary text-white px-4 py-2 rounded-lg border-solid border-secondary hover:border-inmetro hover:bg-inmetro disabled:cursor-none disabled:pointer-events-none disabled:text-white disabled:bg-secondary-light disabled:border-secondary-light transition-[colors, shadow] duration-[400ms] ease-in-out"
+              >
+                Entrar
+              </button>
+            </div>
+          </form>
 
-          <div className="flex flex-row gap-1.5 items-center max-w-[100px] w-full my-3">
-            <div className="bg-divider w-[50px] h-[2px] rounded-[100%_0_0_100%]"></div>
-            <span className="font-medium">OU</span>
-            <div className="bg-divider w-[50px] h-[2px] rounded-[0_100%_100%_0]"></div>
-          </div>
-
-          <div className="block items-center !mb-4">
-            <button
-              onClick={onSubmitGoogle}
-              className="flex flex-row flex-nowrap gap-1.5 items-center text-xl font-normal leading-normal text-center no-underline align-middle cursor-pointer select-none border bg-transparent text-secondary-light px-4 py-2 rounded-lg border-solid border-secondary-light hover:border-inmetro hover:text-inmetro transition[colors, shadow] duration-[350ms] ease-in-out"
-            >
-              Entrar com Google
-              <div className="flex items-center">
-                <Image
-                  src="/google_logo.svg"
-                  width={24}
-                  height={24}
-                  alt="Logo do Google"
-                />
-              </div>
-            </button>
-          </div>
-        </form>
-
-        {<ToastContainer containerId={"standard"} />}
-      </main>
-
+          {<ToastContainer containerId={"standard"} />}
+        </main>
+      )}
       <Footer />
     </div>
   );
